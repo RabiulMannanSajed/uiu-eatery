@@ -72,9 +72,9 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
 // end 
 
 
-// help of chatGpt
 
-    const { img, restaurantName, menuName } = dataOfRestaurantsInfo;
+
+    const { img, restaurantName, menuName } = dataOfRestaurantsInfo; // this is called destructinng 
 
     // this is for pp
     const [loading, setLoading] = useState(false);
@@ -104,8 +104,13 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
 
 
             <div className="grid grid-cols-3 gap-5 mt-5">
+               {/* tarnary oparetor  */}
+               {/*  condition ? ture : false  */}
                 {loading ? (
                     data.map((menuItem) => (
+
+                        // all from degiui card 
+
                         <div key={menuItem._id} className="card w-96 bg-base-100 shadow-xl">
                             <figure>
                                 <img src={menuItem.image} alt={menuItem.name} />

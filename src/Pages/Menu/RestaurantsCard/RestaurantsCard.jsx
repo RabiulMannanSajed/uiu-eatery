@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 // import useMenu from "../../../hooks/useMenu";
 
-const RestaurantsCard = ({ restaurant }) => {
+const RestaurantsCard = ( {restaurant}) => {
     const { restaurantName, img, _id } = restaurant;
     
     // const [restaurantsinfo] = useMenu()
@@ -17,9 +17,6 @@ const RestaurantsCard = ({ restaurant }) => {
                         <h2 className="card-title">{restaurantName}</h2>
                         <p>If a dog chews shoes whose shoes does he choose?</p>
                         <div className="card-actions justify-end">
-                            {/* <Link to="/menu.json/:id"><button onClick={() => handelToViewMeals(_id)} className="btn btn-primary">View Details</button>
-                    </Link> */}
-                           
                         </div>
                     </div>
                 </div>

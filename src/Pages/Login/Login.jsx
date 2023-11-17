@@ -3,19 +3,12 @@ import { Link } from "react-router-dom";
 import loginImg from '../../assets/others/login.png'
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import Swal from "sweetalert2";
 
 const Login = () => {
 
     const { signIn } = useContext(AuthContext)
 
-    // take the path of user from where he is coming from
-    // const navigate = useNavigate();
-    // const location = useLocation();
-
-    // const from = location.state?.from?.pathname || "/";
-
-    const handelLogin = (event) => {
+    const handelLogin = (event) => { // input alawy give me an event 
         event.preventDefault(); // stop page to reload
         const form = event.target; // take the value form input 
         const email = form.email.value;
@@ -24,17 +17,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                Swal.fire({
-                    title: 'Successfully Login',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                })
-                // this will take the user in his previes path
-                // navigate(from, { replace: true });
+                alert("Successfully Login ")
             })
     }
 
@@ -44,6 +27,8 @@ const Login = () => {
             <Helmet>
                 <title>Bistro Boss | Login</title>
             </Helmet>
+            {/*degiui  */}
+
             <div >
                 <div className="hero min-h-screen bg-base-200">
                     <div className="hero-content flex md:flex">
@@ -69,13 +54,7 @@ const Login = () => {
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
                                 </div>
-                                {/* <div className="form-control">
-                                <label className="label">
-                                    {/* <LoadCanvasTemplate /> */}
-                                {/* </label> */}
-                                {/* <input onBlur={handelValidationCaptcha} type="text" name="captcha" placeholder="Type the text above" className="input input-bordered" /> */}
-                                {/* <input  type="text" name="captcha" placeholder="Type the text above" className="input input-bordered" />
-                            </div> */}
+
 
                                 <div className="form-control mt-6">
                                     {/* Make btn disable for captcha */}

@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
                 element: <Restaurants></Restaurants>
             },
             {
-                path: '/restaurantItem/:id',
+                path: '/restaurantItem/:id', // dinmic route
                 element: <RestaurantItem></RestaurantItem>,
                 loader: () => fetch("http://localhost:5000/menu")
             },

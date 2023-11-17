@@ -4,14 +4,20 @@ import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 
 const Restaurants = () => {
+    
     const [restaurants, setRestaurants] = useState([]);
     
+    // [
+    // {
+
+    // }
+    // ]
     useEffect(() => {
         // fetch("menu.json")
         fetch("http://localhost:5000/menu")
             .then(res => res.json())
             .then(data =>
-                // console.log(data);
+                // console.log(data)
                 setRestaurants(data)
             )
     }, [])
@@ -26,10 +32,12 @@ const Restaurants = () => {
                     <title>UIU | Resturent</title>
                 </Helmet>
                 {
-                    restaurants.map(restaurant => <RestaurantsCard
+                    restaurants.map(restaurant => 
+                    <RestaurantsCard
                         key={restaurant._id}
-                        restaurant={restaurant}
+                        restaurant={restaurant} // pass as a props in RestaurantsCard
                     ></RestaurantsCard>)
+                    
                 }
 
             </div>

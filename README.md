@@ -14,3 +14,4 @@
 
  *   npm i swiper
 * npm i @smastrom/react-rating  /// for show the rating start
+* Parallax for react img 

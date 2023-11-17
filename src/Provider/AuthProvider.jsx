@@ -2,17 +2,14 @@ import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-
-
-
 export const AuthContext = createContext(null);
-const auth = getAuth(app)
+const auth = getAuth(app) // 
 // if user location state is not clear the take him to home page 
 
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null) // now no user
+    const [loading, setLoading] = useState(true) // loading alws true 
 
 
     // this is for login a user 
@@ -21,14 +18,17 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
+    // sign Up 
     const signIn = (email, password) => {
         setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password) // for login
+        return signInWithEmailAndPassword(auth, email, password) 
     }
+
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
     }
+    
     // this is to manage user 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {

@@ -1,24 +1,3 @@
-// import { initializeApp } from "firebase/app";
-
-// const firebaseConfig = {
-//     // apiKey: import.meta.env.VITE_apiKey,
-//     // authDomain: import.meta.env.VITE_authDomain,
-//     // projectId: import.meta.env.VITE_projectId,
-//     // storageBucket: import.meta.env.VITE_storageBucket,
-//     // messagingSenderId: import.meta.env.VITE_messagingSenderId,
-//     // appId: import.meta.env.VITE_appId
-//     apiKey: "AIzaSyDHMjwaYFfVqCFEc01yLpWsCiqikgTcwlo",
-//     authDomain: "uiu-eatery.firebaseapp.com",
-//     projectId: "uiu-eatery",
-//     storageBucket: "uiu-eatery.appspot.com",
-//     messagingSenderId: "956817132092",
-//     appId: "1:956817132092:web:79102ddaa776ad83bfd139"
-
-// };
-
-// // we have to export this
-//  const app = initializeApp(firebaseConfig);
-
 //  export default app
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";

@@ -3,13 +3,16 @@ import NavBar from '../Pages/Shared/NavBar/NavBar';
 import Footer from '../Pages/Shared/Footer/Footer';
 
 const Main = () => {
-    const location = useLocation(); // this will give u the current location
+    const location = useLocation(); // this will give u the current location = sinUp login
     const noHederFooter = location.pathname.includes('login') || location.pathname.includes('signup')
+    
     return (
-        <div>
+    
+    <div>
             {noHederFooter || <NavBar></NavBar>} {/* when or's before option is false then show nav */}
-            <Outlet></Outlet>
+            <Outlet></Outlet> {/* to show all component of ur project under a folder  */} 
             {noHederFooter || <Footer></Footer>}
+    
         </div>
     );
 };

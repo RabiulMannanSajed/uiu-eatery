@@ -1,5 +1,5 @@
 
-const SectionTitle = ({ heading, subHeading }) => {
+const SectionTitle = ({ heading, subHeading }) => { // coming as props 
     return (
         <div className="mx-auto text-center md:w-4/12 my-8 ">
             <p className="text-orange-600 mb-2">---{subHeading}---</p>
