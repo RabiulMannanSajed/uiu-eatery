@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const NavBar = () => {
   //pore
+  // for login logout
   const { user, logOut } = useContext(AuthContext);
 
   const handleLogOut = () => {
@@ -15,7 +16,7 @@ const NavBar = () => {
       })
       .catch((error) => alert(error));
   };
-
+  //  end
   const navPotion = (
     <>
       <li>
@@ -45,7 +46,8 @@ const NavBar = () => {
   const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/fooditem")
+    // fetch("http://localhost:5000/fooditem")
+    fetch("item.json")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);
@@ -61,19 +63,7 @@ const NavBar = () => {
         title: "<strong>HTML <u>example</u></strong>",
         // this is the search item
         html: `
-        <div>
-          {filteredItem.length > 0 ? (
-            filteredItem.map((item) => (
-              <div key={item._id}>
-                <p>Restaurant Name: {item.restaurantName}</p>
-                <p>Category: {item.category}</p>
-                <p>Price: {item.price}</p>
-              </div>
-            ))
-          ) : (
-            <p>No items found.</p>
-          )}
-        </div>   
+          
         `,
         showCloseButton: true,
 
@@ -85,6 +75,7 @@ const NavBar = () => {
       setFilteredItem([]);
     }
   };
+  //search end
 
   return (
     <>
@@ -107,15 +98,17 @@ const NavBar = () => {
                 />
               </svg>
             </label>
+            {/* for small device (dropdown-content)*/}
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black"
             >
               {navPotion}
             </ul>
           </div>
           <img src={logo} alt="" />
         </div>
+        {/* laptop view */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navPotion}</ul>
         </div>
@@ -129,6 +122,19 @@ const NavBar = () => {
             onBlur={handleSearch}
             placeholder="Search by category"
           />
+        </div>
+        <div>
+          {filteredItem.length > 0 ? (
+            filteredItem.map((item) => (
+              <div key={item._id}>
+                <p>Restaurant Name: {item.restaurantName}</p>
+                <p>Category: {item.category}</p>
+                <p>Price: {item.price}</p>
+              </div>
+            ))
+          ) : (
+            <p>No items found.</p>
+          )}
         </div>
         {/* TODO : when user login then do it  */}
 
