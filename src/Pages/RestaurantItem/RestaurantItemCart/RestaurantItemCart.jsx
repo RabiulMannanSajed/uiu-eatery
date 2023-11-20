@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import Cover from "../../Shared/Cover/Cover";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -26,7 +25,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
 
   return (
     <div>
-      {/* <Cover img={img} title={"Order Food"} restaurantName={restaurantName} /> */}
+      <Cover img={img} title={"Order Food"} restaurantName={restaurantName} />
 
       <div className="grid grid-cols-3 gap-5 mt-5">
         {loading ? (

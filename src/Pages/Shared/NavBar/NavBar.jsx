@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
-import Swal from "sweetalert2";
-
 const NavBar = () => {
-  //pore
   // for login logout
   const { user, logOut } = useContext(AuthContext);
 
@@ -46,8 +43,8 @@ const NavBar = () => {
   const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
-    // fetch("http://localhost:5000/fooditem")
-    fetch("item.json")
+    fetch("http://localhost:5000/fooditem")
+      // fetch("item.json")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);
@@ -59,22 +56,11 @@ const NavBar = () => {
     if (searchFood) {
       const filtered = menuData.filter((item) => item.category === searchFood);
       setFilteredItem(filtered);
-      Swal.fire({
-        title: "<strong>HTML <u>example</u></strong>",
-        // this is the search item
-        html: `
-          
-        `,
-        showCloseButton: true,
-
-        confirmButtonText: `
-          <i class="fa fa-thumbs-up"></i> Great!
-        `,
-      });
     } else {
       setFilteredItem([]);
     }
   };
+
   //search end
 
   return (
@@ -123,18 +109,34 @@ const NavBar = () => {
             placeholder="Search by category"
           />
         </div>
-        <div>
-          {filteredItem.length > 0 ? (
-            filteredItem.map((item) => (
-              <div key={item._id}>
-                <p>Restaurant Name: {item.restaurantName}</p>
-                <p>Category: {item.category}</p>
-                <p>Price: {item.price}</p>
-              </div>
-            ))
-          ) : (
-            <p>No items found.</p>
-          )}
+        {/* show search item */}
+        <label htmlFor="my_modal_6" className="btn btn-sm">
+          Search
+        </label>
+        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+        <div className="modal" role="dialog">
+          <div className="modal-box">
+            <div className="grid grid-cols-2 gap-5">
+              {filteredItem.length > 0 ? (
+                filteredItem.map((item) => (
+                  <div key={item._id}>
+                    <p className="text-black text-amber-500 text-xl">
+                      {item.restaurantName}
+                    </p>
+
+                    <p className="text-black">Price: {item.price}$</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-red-500 ">No items found.</p>
+              )}
+            </div>
+            <div className="modal-action">
+              <label htmlFor="my_modal_6" className="btn bg-orange-500">
+                Close
+              </label>
+            </div>
+          </div>
         </div>
         {/* TODO : when user login then do it  */}
 

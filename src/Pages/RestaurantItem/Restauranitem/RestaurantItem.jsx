@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 // import useMenu from "../../../hooks/useMenu";
 import RestaurantItemCart from "../RestaurantItemCart/RestaurantItemCart";
-import { Helmet } from "react-helmet-async";
 
 const RestaurantItem = () => {
   const [dataOfRestaurantsInfo, setDataOfRestaurantsInfo] = useState([]); //  here data come as array so use [] sign in useState
