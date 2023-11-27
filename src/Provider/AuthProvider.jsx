@@ -14,15 +14,15 @@ const auth = getAuth(app); //
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // now no user
-  const [loading, setLoading] = useState(true); // loading alws true
+  const [loading, setLoading] = useState(false); // loading alws false
 
-  // this is for login a user
+  // signUp
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // sign Up
+  // this is for login a user
   const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);

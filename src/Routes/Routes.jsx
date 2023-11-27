@@ -24,7 +24,8 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurantItem/:id', // dinmic route
                 element: <RestaurantItem></RestaurantItem>,
-                loader: () => fetch("http://localhost:5000/menu")
+                // loader: () => fetch("http://localhost:5000/menu")
+                loader: () => fetch("/menu.json")
             },
             {
                 path: '/login',

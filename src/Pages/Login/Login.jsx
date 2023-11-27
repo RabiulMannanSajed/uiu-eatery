@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import loginImg from '../../assets/others/login.png'
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
 
@@ -17,7 +18,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                alert("Successfully Login ")
+                Swal.fire("Successfully Login");
             })
     }
 

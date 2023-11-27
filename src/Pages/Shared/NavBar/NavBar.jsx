@@ -43,8 +43,8 @@ const NavBar = () => {
   const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/fooditem")
-      // fetch("item.json")
+    // fetch("http://localhost:5000/fooditem")
+      fetch("item.json")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);

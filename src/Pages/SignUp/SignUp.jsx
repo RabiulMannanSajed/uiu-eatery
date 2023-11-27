@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import loginImg from "../../assets/others/login.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 const SignUp = () => {
   const {
     register,
@@ -13,9 +14,12 @@ const SignUp = () => {
   const { createUser } = useContext(AuthContext);
 
   const onSubmit = (data) => {
-    createUser(data.email, data.password).then((result) => {
+    createUser(data.email, data.password)
+    .then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
+      Swal.fire("Successfully SignIn");
+
     });
   };
 
@@ -35,14 +39,7 @@ const SignUp = () => {
             <h1 className="text-3xl text-center font-bold mt-4">Sign Up</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              {/* photo */}
-              {/* <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Photo Url</span>
-                                </label>
-                                <input type="text" {...register("photoUrl")} required={true} placeholder="photoUrl" className="input input-bordered" />
-                                {errors.name && <span>Photo Url is required</span>}
-                            </div> */}
+            
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
