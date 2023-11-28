@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/others/login.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -9,17 +9,22 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const { createUser } = useContext(AuthContext);
-
+  const { createUser, UpdateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    createUser(data.email, data.password)
-    .then((result) => {
+    createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
-      console.log(loggedUser);
-      Swal.fire("Successfully SignIn");
-
+      // console.log(loggedUser);
+      UpdateUserProfile(data.name, data.photoURL)
+        .then(() => {
+          reset();
+          Swal.fire("User created successfully");
+          navigate("/");
+        })
+        .catch((error) => console.log(error));
     });
   };
 
@@ -39,7 +44,6 @@ const SignUp = () => {
             <h1 className="text-3xl text-center font-bold mt-4">Sign Up</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>

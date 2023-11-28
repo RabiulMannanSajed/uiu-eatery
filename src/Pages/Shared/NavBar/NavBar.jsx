@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { useContext, useEffect, useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+
 import { AuthContext } from "../../../Provider/AuthProvider";
 const NavBar = () => {
   // for login logout
@@ -21,6 +23,15 @@ const NavBar = () => {
       </li>
       <li>
         <Link to="/menu">Our Restaurant </Link>
+      </li>
+      <li>
+        <Link to="/secret">Secret</Link>
+      </li>
+      <li>
+        <Link to="/">
+          <FaShoppingCart className="text-orange-500 text-xl"></FaShoppingCart>{" "}
+          <div className="badge text-xl">0</div>
+        </Link>
       </li>
       {user ? (
         <>
@@ -43,15 +54,15 @@ const NavBar = () => {
   const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
-    // fetch("http://localhost:5000/fooditem")
-      fetch("item.json")
+    fetch("http://localhost:5000/fooditem")
+      // fetch("item.json")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);
-  console.log(menuData);
+  // console.log(menuData);
   const handleSearch = (event) => {
     const searchFood = event.target.value;
-    console.log(searchFood);
+    // console.log(searchFood);
 
     if (searchFood) {
       const filtered = menuData.filter((item) => item.category === searchFood);
@@ -143,23 +154,6 @@ const NavBar = () => {
         {/* <div className="navbar-end">
           <span>{user?.email}</span>
         </div> */}
-        <div className="indicator">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-            />
-          </svg>
-          <span className="badge badge-xs badge-primary indicator-item">1</span>
-        </div>
       </div>
     </>
   );

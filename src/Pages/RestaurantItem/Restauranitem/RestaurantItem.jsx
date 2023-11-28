@@ -6,11 +6,6 @@ import RestaurantItemCart from "../RestaurantItemCart/RestaurantItemCart";
 const RestaurantItem = () => {
   const [dataOfRestaurantsInfo, setDataOfRestaurantsInfo] = useState([]); //  here data come as array so use [] sign in useState
 
-  // loader: () => fetch("http://localhost:5000/menu")
-  // useEffect(()=>{
-
-  // },[])
-
   const { id } = useParams(); //this is for route
 
   const restInfo = useLoaderData();
@@ -22,7 +17,7 @@ const RestaurantItem = () => {
     setDataOfRestaurantsInfo(restId);
   }, []);
 
-  console.log(dataOfRestaurantsInfo);
+  // console.log(dataOfRestaurantsInfo);
 
   return (
     <div>

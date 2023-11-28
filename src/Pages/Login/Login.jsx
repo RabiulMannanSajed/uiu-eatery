@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from '../../assets/others/login.png'
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -8,6 +8,14 @@ import Swal from "sweetalert2";
 const Login = () => {
 
     const { signIn } = useContext(AuthContext)
+
+// to replace the user is the prev page 
+const navigate = useNavigate();
+const location = useLocation();
+console.log(location);
+const  from = location.state?.from?.pathname || "/";
+
+
 
     const handelLogin = (event) => { // input alawy give me an event 
         event.preventDefault(); // stop page to reload
@@ -19,6 +27,8 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 Swal.fire("Successfully Login");
+                // now take him to the right place 
+                navigate(from, { replace: true });
             })
     }
 
