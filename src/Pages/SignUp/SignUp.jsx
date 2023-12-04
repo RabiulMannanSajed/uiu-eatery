@@ -17,7 +17,7 @@ const SignUp = () => {
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
-      // console.log(loggedUser);
+      console.log(loggedUser);
       UpdateUserProfile(data.name, data.photoURL)
         .then(() => {
           reset();
@@ -66,6 +66,7 @@ const SignUp = () => {
                   {...register("email", {
                     required: true,
                     pattern: {
+                      /* TODO : cnage the bscse */
                       value: /\S+@bscse\.uiu\.ac\.bd$/,
                       message: "Entered value does not match email format",
                     },

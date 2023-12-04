@@ -4,10 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 import { AuthContext } from "../../../Provider/AuthProvider";
+import useCart from "../../../hooks/useCart";
 const NavBar = () => {
   // for login logout
   const { user, logOut } = useContext(AuthContext);
-
+  const [foodCart] = useCart();
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -28,9 +29,9 @@ const NavBar = () => {
         <Link to="/secret">Secret</Link>
       </li>
       <li>
-        <Link to="/">
+        <Link to="/dashboard/myCart">
           <FaShoppingCart className="text-orange-500 text-xl"></FaShoppingCart>{" "}
-          <div className="badge text-xl">0</div>
+          <div className="badge text-xl">+{foodCart?.length || 0}</div>
         </Link>
       </li>
       {user ? (
@@ -116,11 +117,12 @@ const NavBar = () => {
           <input
             className="input input-bordered w-24 md:w-auto text-black"
             type="text"
-            onBlur={handleSearch}
+            // onBlur={handleSearch}
+            onChange={handleSearch}
             placeholder="Search by category"
           />
         </div>
-        {/* show search item */}
+        {/* show search item model  */}
         <label htmlFor="my_modal_6" className="btn btn-sm">
           Search
         </label>
@@ -134,6 +136,7 @@ const NavBar = () => {
                     <p className="text-black text-amber-500 text-xl">
                       {item.restaurantName}
                     </p>
+                    <p>{item.name}</p>
 
                     <p className="text-black">Price: {item.price}$</p>
                   </div>
@@ -151,9 +154,9 @@ const NavBar = () => {
         </div>
         {/* TODO : when user login then do it  */}
 
-        {/* <div className="navbar-end">
-          <span>{user?.email}</span>
-        </div> */}
+        <div className="navbar-end">
+          <span>{user?.displayName}</span>
+        </div>
       </div>
     </>
   );

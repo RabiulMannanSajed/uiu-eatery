@@ -4,16 +4,20 @@ import { useEffect } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../../hooks/useCart";
 
 const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
   const { img, restaurantName, menuName } = dataOfRestaurantsInfo; // this is called destructinng
   const { user } = useContext(AuthContext);
-  // this is for pp
+
   const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState([]);
+
   const [foods, setFoods] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [, refetch] = useCart();
   // console.log(dataOfRestaurantsInfo);
   // console.log(menuName);
 
@@ -35,18 +39,38 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
     return <div>Loading...</div>;
   }
 
-  // not finish yet
+  // this is  new
+  // this is for add the item in data base
   const handleAddToCart = (item) => {
+    // this find the id
     const addFood = foods.find((food) => food._id == item);
     console.log(addFood);
-    if (user) {
+    console.log(user);
+    if (user && user.email) {
       // we will send those data to our data base
-      const orderItem = { foodId: addFood._id };
+      const orderItem = {
+        foodId: addFood._id,
+        category: addFood.category,
+        name: addFood.name,
+        price: addFood.price,
+        img: addFood.image,
+        restaurantName: addFood.restaurantName,
+        email: user.email,
+      };
 
-      fetch("http://localhost:5000/foodCart")
+      fetch("http://localhost:5000/foodCarts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderItem),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            // this is use for navbar
+            refetch();
+
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -64,7 +88,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Login!",
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login", { state: { from: location } });
@@ -92,7 +116,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
                 <p>{menuItem.recipe}</p>
                 <div className="card-actions justify-end">
                   <button
-                    // taking the item id
+                    // taking the item id new
                     onClick={() => handleAddToCart(menuItem._id)}
                     className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
                   >

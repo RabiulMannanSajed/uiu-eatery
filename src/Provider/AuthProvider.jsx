@@ -33,13 +33,14 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
-  const UpdateUserProfile =(name,photo) =>{
-    setLoading(true)
-    return updateProfile(auth.currentUser,{
-      displayName:name ,
-      photoURL:photo,
-    })
-  }
+  // new
+  const UpdateUserProfile = (name, photo) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
 
   // this is to manage user
   useEffect(() => {
@@ -58,7 +59,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     logOut,
-    UpdateUserProfile
+    UpdateUserProfile,
   };
 
   return (
