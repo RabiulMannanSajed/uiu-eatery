@@ -14,15 +14,36 @@ const SignUp = () => {
   } = useForm();
   const { createUser, UpdateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
+
       UpdateUserProfile(data.name, data.photoURL)
         .then(() => {
-          reset();
-          Swal.fire("User created successfully");
-          navigate("/");
+          // this all data is going to database 12/6/23
+          const saveUser = {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+          };
+          // this is taking the data of user and post the info to the database
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                reset();
+                Swal.fire("User created successfully");
+                navigate("/");
+              }
+            });
         })
         .catch((error) => console.log(error));
     });

@@ -1,6 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaCalendar, FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
+import {
+  FaBook,
+  FaCalendar,
+  FaHome,
+  FaList,
+  FaShoppingCart,
+  FaUsers,
+  FaUtensils,
+  FaWallet,
+} from "react-icons/fa";
 const Dashboard = () => {
+  const isAdmin = true;
   return (
     <div>
       <div className="drawer lg:drawer-open ">
@@ -22,32 +32,70 @@ const Dashboard = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu p-4 w-80 min-h-full text-base-content bg-[#d15454]">
-            {/* Sidebar content here */}
-            <li>
-              <NavLink to="/dashboard/home">
-                <FaShoppingCart></FaShoppingCart>User Home
-              </NavLink>{" "}
-            </li>
-            <li>
-              <NavLink to="/dashboard/reservations">
-                <FaShoppingCart></FaShoppingCart>Reservations
-              </NavLink>{" "}
-            </li>
-            <li>
-              <NavLink to="/dashboard/myCart">
-                <FaShoppingCart></FaShoppingCart>My cart
-              </NavLink>{" "}
-            </li>
-            <li>
-              <NavLink to="/dashboard/payment">
-                <FaWallet></FaWallet> Payment History
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/myBooking">
-                <FaCalendar></FaCalendar> my booking
-              </NavLink>
-            </li>
+            {/* this is fro admin and normal user  */}
+            {isAdmin ? (
+              <>
+                <li>
+                  <NavLink to="/dashboard/adminHome">
+                    {" "}
+                    <FaHome></FaHome>Admin Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addItems">
+                    {" "}
+                    <FaUtensils></FaUtensils>Add Item
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/manageItems">
+                    {" "}
+                    <FaList></FaList>Mange Item
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/bookings">
+                    {" "}
+                    <FaBook></FaBook>Mange Booking
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/allusers">
+                    {" "}
+                    <FaUsers></FaUsers>All user
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/dashboard/home">
+                    <FaShoppingCart></FaShoppingCart>User Home
+                  </NavLink>
+                </li>{" "}
+                <li>
+                  <NavLink to="/dashboard/reservations">
+                    <FaShoppingCart></FaShoppingCart>Reservations
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/myCart">
+                    <FaShoppingCart></FaShoppingCart>My cart
+                  </NavLink>
+                </li>{" "}
+                <li>
+                  <NavLink to="/dashboard/payment">
+                    <FaWallet></FaWallet> Payment History
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/myBooking">
+                    <FaCalendar></FaCalendar> my booking
+                  </NavLink>
+                </li>
+              </>
+            )}
+
             <div className="divider"></div>
             <li>
               <NavLink to="/">

@@ -139,6 +139,9 @@ const NavBar = () => {
                     <p>{item.name}</p>
 
                     <p className="text-black">Price: {item.price}$</p>
+                    <Link to={`/restaurantItem/${item._id}`}>
+                      <button className="bg-black">Go to Order</button>
+                    </Link>
                   </div>
                 ))
               ) : (
