@@ -8,6 +8,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Dashboard from "../Layout/Dashboard";
 import MyCart from "../Pages/Dashboard/MyCart/MyCart";
 import AllUsers from "../Pages/Dashboard/Allusers/Allusers";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -36,28 +37,24 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp></SignUp>,
       },
-      /* this is way to make the route private  */
-      // {
-      //   path: "/secret",
-      //   element: (
-      //     <PrivateRoute>
-      //       <Secret></Secret>
-      //     </PrivateRoute>
-      //   ),
-      // },
     ],
   },
   {
     path: "dashboard",
     element: <Dashboard></Dashboard>,
+
     children: [
+      {
+        path: "allusers",
+        element: <AllUsers></AllUsers>,
+      },
       {
         path: "myCart",
         element: <MyCart></MyCart>,
       },
       {
-        path: "allusers",
-        element: <AllUsers></AllUsers>,
+        path: "payment", // this is for pay btn
+        element: <Payment></Payment>,
       },
     ],
   },

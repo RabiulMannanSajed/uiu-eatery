@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // get and set token
+      // get and set token put in localStorage not that much secure
       if (currentUser) {
         axios
           .post("http://localhost:5000/jwt", { email: currentUser.email })

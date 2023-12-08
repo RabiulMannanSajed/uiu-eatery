@@ -16,6 +16,8 @@ const AllUsers = () => {
       return res.json();
     },
   });
+
+  // this is to make the user admin
   const handleMakeAdmin = (user) => {
     fetch(`http://localhost:5000/users/admin/${user._id}`, {
       method: "PATCH",
@@ -45,7 +47,7 @@ const AllUsers = () => {
       });
   };
 
-  //   in data base two api is make here i update the user base on his id and add the restaurantName  all is successfully added
+  //   in data base two api is make here i update the user base on his id and add the restaurantName
   const handleRestaurantName = (restaurantName, user) => {
     console.log(restaurantName);
     fetch(`http://localhost:5000/users/restaurantName/${user._id}`, {
@@ -61,6 +63,7 @@ const AllUsers = () => {
         }
       });
   };
+  // TODO : Delete the user
   const handleDelete = (user) => {};
   return (
     <div>

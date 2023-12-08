@@ -9,8 +9,34 @@ import {
   FaUtensils,
   FaWallet,
 } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import useAdmin from "../hooks/useAdmin";
 const Dashboard = () => {
-  const isAdmin = true;
+  const { user } = useContext(AuthContext);
+  console.log("User", user?.email);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const [users] = useAdmin();
+
+  // here check is admin or not
+  // users.map((user) => {
+  //   const userEmail = user?.email == user?.email;
+  //   const userIsAdmin = user?.role === "admin";
+
+  //   console.log("Admin is", userIsAdmin);
+  //   console.log("user email is", userEmail);
+  // });
+  useEffect(() => {
+    // Check if any user has the role of "admin"
+    const userInDb = users.find((dbUser) => dbUser?.email === user?.email);
+    if (userInDb || null) {
+      setIsAdmin(userInDb.role === "admin");
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user?.email, users]);
   return (
     <div>
       <div className="drawer lg:drawer-open ">
@@ -31,7 +57,7 @@ const Dashboard = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-80 min-h-full text-base-content bg-[#d15454]">
+          <ul className="menu p-4 w-80 min-h-full text-base-content bg-[#facf41]">
             {/* this is fro admin and normal user  */}
             {isAdmin ? (
               <>
