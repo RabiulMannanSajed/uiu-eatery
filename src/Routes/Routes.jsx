@@ -9,6 +9,8 @@ import Dashboard from "../Layout/Dashboard";
 import MyCart from "../Pages/Dashboard/MyCart/MyCart";
 import AllUsers from "../Pages/Dashboard/Allusers/Allusers";
 import Payment from "../Pages/Dashboard/Payment/Payment";
+import MakeRestaurant from "../Pages/MakeRestaurant/MakeRestaurant";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,10 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp></SignUp>,
       },
+      {
+        path: "/makeARestaurant",
+        element: <MakeRestaurant></MakeRestaurant>,
+      },
     ],
   },
   {
@@ -55,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "payment", // this is for pay btn
         element: <Payment></Payment>,
+      },
+      {
+        path: "adminHome",
+        element: <AdminHome></AdminHome>,
       },
     ],
   },

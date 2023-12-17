@@ -32,7 +32,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Bistro Boss | Login</title>
+        <title>UIU Eatery | Login</title>
       </Helmet>
       {/*degiui  */}
 

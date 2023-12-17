@@ -22,11 +22,10 @@ const SignUp = () => {
 
       UpdateUserProfile(data.name, data.photoURL)
         .then(() => {
-          // this all data is going to database 12/6/23
+          // this all data is going to database
           const saveUser = {
             name: data.name,
             email: data.email,
-            password: data.password,
           };
           // this is taking the data of user and post the info to the database
           fetch("http://localhost:5000/users", {
@@ -40,6 +39,7 @@ const SignUp = () => {
             .then((data) => {
               if (data.insertedId) {
                 reset();
+                // work for model
                 Swal.fire("User created successfully");
                 navigate("/");
               }
@@ -52,7 +52,7 @@ const SignUp = () => {
   return (
     <>
       <Helmet>
-        <title>Bistro Boss | SignUp</title>
+        <title>UIU Eatery | SignUp</title>
       </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
@@ -109,34 +109,12 @@ const SignUp = () => {
                   type="password"
                   {...register("password", {
                     required: true,
-                    minLength: 6,
-                    maxLength: 20,
-                    pattern:
-                      /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]/,
                   })}
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
                 />
-                {errors.password?.type === "required" && (
-                  <p className="text-red-600">password required</p>
-                )}
-                {errors.password?.type === "minLength" && (
-                  <p className="text-red-600">
-                    password must be more then 6 character
-                  </p>
-                )}
-                {errors.password?.type === "maxLength" && (
-                  <p className="text-red-600">
-                    password must be less then 20char required
-                  </p>
-                )}
-                {errors.password?.type === "pattern" && (
-                  <p className="text-red-600">
-                    password must have one uppercase one lowercase, one number
-                    and one special character
-                  </p>
-                )}
+
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?

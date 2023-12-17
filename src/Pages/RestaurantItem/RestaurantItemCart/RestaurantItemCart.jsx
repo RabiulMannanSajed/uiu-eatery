@@ -35,13 +35,14 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
       .then((data) => setFoods(data));
   }, []);
 
-  if (!dataOfRestaurantsInfo) {
-    return <div>Loading...</div>;
-  }
+  // if (!dataOfRestaurantsInfo) {
+  //   return <div>Loading...</div>;
+  // }
 
   // this is  new
   // this is for add the item in data base
   const handleAddToCart = (item) => {
+    console.log(item);
     // this find the id
     const addFood = foods.find((food) => food._id == item);
     console.log(addFood);

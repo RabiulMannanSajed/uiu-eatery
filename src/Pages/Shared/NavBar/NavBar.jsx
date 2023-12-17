@@ -4,11 +4,34 @@ import { useContext, useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 import { AuthContext } from "../../../Provider/AuthProvider";
-import useCart from "../../../hooks/useCart";
+import useUser from "../../../hooks/useUser";
+import useOrdered from "../../../hooks/useOrdered";
 const NavBar = () => {
   // for login logout
   const { user, logOut } = useContext(AuthContext);
-  const [foodCart] = useCart();
+  const [users] = useUser();
+  // all food
+  const [foodCarts, refetch] = useOrdered();
+  const [orderedFood, setOrderedFood] = useState([]);
+  // test
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    const userInfo = users.find(
+      (userEmail) => userEmail?.email === user?.email
+    );
+    console.log("present user info", userInfo);
+    setUserData(userInfo);
+  }, []);
+  // this see his ordered food
+  useEffect(() => {
+    const userFood = foodCarts.filter(
+      (oderEmail) => oderEmail?.email == user?.email
+    );
+    console.log(userFood);
+    console.log("Cart length", userFood.length);
+    setOrderedFood(userFood);
+  }, [foodCarts, user?.email]);
+  refetch();
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -31,7 +54,7 @@ const NavBar = () => {
       <li>
         <Link to="/dashboard/myCart">
           <FaShoppingCart className="text-orange-500 text-xl"></FaShoppingCart>{" "}
-          <div className="badge text-xl">+{foodCart?.length || 0}</div>
+          <div className="badge text-xl">+{orderedFood?.length || 0}</div>
         </Link>
       </li>
       {user ? (
@@ -46,6 +69,15 @@ const NavBar = () => {
             <Link to="/login">Login</Link>
           </li>
         </>
+      )}
+      {user ? (
+        <>
+          <li>
+            <Link to="/makeARestaurant">Make a Restaurant</Link>
+          </li>
+        </>
+      ) : (
+        <></>
       )}
     </>
   );

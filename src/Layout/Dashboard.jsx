@@ -1,6 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
 import {
-  FaBook,
   FaCalendar,
   FaHome,
   FaList,
@@ -17,31 +16,26 @@ const Dashboard = () => {
   console.log("User", user?.email);
 
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [isWebAdmin, setIsWebAdmin] = useState(false);
+  // const isWebAdmin = true;
   const [users] = useAdmin();
 
-  // here check is admin or not
-  // users.map((user) => {
-  //   const userEmail = user?.email == user?.email;
-  //   const userIsAdmin = user?.role === "admin";
-
-  //   console.log("Admin is", userIsAdmin);
-  //   console.log("user email is", userEmail);
-  // });
   useEffect(() => {
     // Check if any user has the role of "admin"
     const userInDb = users.find((dbUser) => dbUser?.email === user?.email);
     if (userInDb || null) {
       setIsAdmin(userInDb.role === "admin");
+      setIsWebAdmin(userInDb.role === "webAdmin");
     } else {
       setIsAdmin(false);
+      // setIsWebAdmin(false);
     }
   }, [user?.email, users]);
   return (
     <div>
       <div className="drawer lg:drawer-open ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content flex flex-col ">
           {/* Page content here */}
           <Outlet></Outlet>
           <label
@@ -76,19 +70,15 @@ const Dashboard = () => {
                 <li>
                   <NavLink to="/dashboard/manageItems">
                     {" "}
-                    <FaList></FaList>Mange Item
+                    <FaList></FaList>Manage Item
                   </NavLink>
                 </li>
+              </>
+            ) : isWebAdmin ? (
+              <>
                 <li>
-                  <NavLink to="/dashboard/bookings">
-                    {" "}
-                    <FaBook></FaBook>Mange Booking
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/allusers">
-                    {" "}
-                    <FaUsers></FaUsers>All user
+                  <NavLink to="/dashboard/allUsers">
+                    <FaUsers></FaUsers>All Users
                   </NavLink>
                 </li>
               </>

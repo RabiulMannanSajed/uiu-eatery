@@ -2,12 +2,7 @@ import { Link } from "react-router-dom";
 // import useMenu from "../../../hooks/useMenu";
 
 const RestaurantsCard = ({ restaurant }) => {
-  const { restaurantName, img, _id } = restaurant; /* props.restaurant */
-
-  // const [restaurantsinfo] = useMenu()
-  // const menuId = restaurantsinfo.map(id => id._id === _id);
-  // console.log("Menu Id", menuId);
-
+  const { restaurantName, img, _id } = restaurant;
   return (
     <div>
       <Link to={`/restaurantItem/${_id}`}>
@@ -17,7 +12,6 @@ const RestaurantsCard = ({ restaurant }) => {
           </figure>
           <div className="card-body">
             <h2 className="card-title">{restaurantName}</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
             <div className="card-actions justify-end"></div>
           </div>
         </div>

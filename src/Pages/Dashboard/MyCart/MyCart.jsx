@@ -1,15 +1,39 @@
-import { FaTrashAlt } from "react-icons/fa";
-import useCart from "../../../hooks/useCart";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import useUser from "../../../hooks/useUser";
+import useOrdered from "../../../hooks/useOrdered";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 
 const MyCart = () => {
-  const [foodCart, refetch] = useCart();
-  console.log(foodCart);
+  const { user } = useContext(AuthContext);
+  const [users] = useUser();
+  // all food
+  const [foodCarts, refetch] = useOrdered();
+  const [orderedFood, setOrderedFood] = useState([]);
+  // find the user info
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    const userInfo = users.find(
+      (userEmail) => userEmail?.email === user?.email
+    );
+    console.log("present user info", userInfo);
+    setUserData(userInfo);
+  }, []);
+  // here find the user email
+  console.log("email of user ", userData?.email);
 
-  const total = foodCart.reduce((sum, item) => item.price + sum, 0);
-
-  // this is for  delete
+  // this see his ordered food
+  useEffect(() => {
+    const userFood = foodCarts.filter(
+      (oderEmail) => oderEmail?.email == user?.email
+    );
+    console.log(userFood);
+    console.log("Cart length", userFood.length);
+    setOrderedFood(userFood);
+  }, [foodCarts, user?.email]);
+  const total = orderedFood.reduce((sum, item) => item.price + sum, 0);
   const handelDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -38,11 +62,10 @@ const MyCart = () => {
       }
     });
   };
-
   return (
     <div>
-      <div className="uppercase font-bold flex justify-evenly items-center h-[60px]">
-        <h2>this is my cart{foodCart.length} </h2>
+      <div className="uppercase font-bold flex justify-evenly items-center h-[60px] ">
+        <h2>this is my cart{orderedFood.length} </h2>
 
         <p>total Price : BDT {total}</p>
         <Link to="/dashboard/payment">
@@ -67,7 +90,7 @@ const MyCart = () => {
             </tr>
           </thead>
           <tbody>
-            {foodCart.map((item, index) => (
+            {orderedFood.map((item, index) => (
               <tr key={item._id}>
                 <td>{index + 1}</td>
                 <td>
@@ -88,7 +111,7 @@ const MyCart = () => {
                 <th>
                   <button
                     onClick={() => handelDelete(item)}
-                    className="btn btn-ghost btn-xs bg-red-400 text-gray-500"
+                    className="btn btn-ghost btn-xs  bg-[#facf41] text-gray-500"
                   >
                     <FaTrashAlt></FaTrashAlt>
                   </button>

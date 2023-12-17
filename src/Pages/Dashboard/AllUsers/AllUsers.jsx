@@ -16,7 +16,6 @@ const AllUsers = () => {
       return res.json();
     },
   });
-
   // this is to make the user admin
   const handleMakeAdmin = (user) => {
     fetch(`http://localhost:5000/users/admin/${user._id}`, {
@@ -49,12 +48,19 @@ const AllUsers = () => {
 
   //   in data base two api is make here i update the user base on his id and add the restaurantName
   const handleRestaurantName = (restaurantName, user) => {
-    console.log(restaurantName);
+    const updateData = {
+      restaurantName: restaurantName,
+    };
     fetch(`http://localhost:5000/users/restaurantName/${user._id}`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateData),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("data", data);
         if (data.modifiedCount) {
           refetch();
           Swal.fire(
@@ -64,7 +70,36 @@ const AllUsers = () => {
       });
   };
   // TODO : Delete the user
-  const handleDelete = (user) => {};
+  const handleDelete = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/users/${user._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              console.log(data);
+              refetch();
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+    console.log(user);
+  };
   return (
     <div>
       <h2>this is all users</h2>
@@ -112,19 +147,17 @@ const AllUsers = () => {
                       {/* here first i take the rest name and then i take the user send it to the fnc  */}
                       {menu.map((restName) => (
                         <li key={restName._id}>
-                          {users.map((user) => (
-                            <a
-                              key={user._id}
-                              onClick={() =>
-                                handleRestaurantName(
-                                  restName.restaurantName,
-                                  user
-                                )
-                              }
-                            >
-                              {restName.restaurantName}
-                            </a>
-                          ))}
+                          <a
+                            key={user._id}
+                            onClick={() =>
+                              handleRestaurantName(
+                                restName.restaurantName,
+                                user
+                              )
+                            }
+                          >
+                            {restName.restaurantName}
+                          </a>
                         </li>
                       ))}
                     </ul>

@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-// this is for check about user
-
-const useAdmin = () => {
+const useUser = () => {
   const {
     isPending,
     data: users = [],
@@ -16,4 +14,5 @@ const useAdmin = () => {
   });
   return [users, refetch, isPending];
 };
-export default useAdmin;
+
+export default useUser;
