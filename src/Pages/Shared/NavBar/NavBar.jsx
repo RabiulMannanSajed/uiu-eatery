@@ -107,22 +107,6 @@ const NavBar = () => {
     }
   };
 
-  // const [restName, setRestName] = useState([]);
-
-  // // useEffect to log the updated state
-  // useEffect(() => {
-  //   console.log(restName?._id);
-  // }, [restName]);
-
-  // const handleRestName = async (rName) => {
-  //   const restId = menu.find(
-  //     (findRestName) => findRestName.restaurantName == rName
-  //   );
-  //   isPending();
-  //   // setRestName and let the useEffect handle the logging
-  //   await setRestName(restId);
-  //   console.log(restId._id);
-  // };
   const handleMouseEnter = async (restaurantName) => {
     const restId = menuDataID.find(
       (findRestName) => findRestName.restaurantName === restaurantName
