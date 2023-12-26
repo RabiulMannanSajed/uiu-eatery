@@ -6,20 +6,24 @@ import { FaShoppingCart } from "react-icons/fa";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useUser from "../../../hooks/useUser";
 import useOrdered from "../../../hooks/useOrdered";
+import useMenu from "../../../hooks/useMenu";
 const NavBar = () => {
   // for login logout
   const { user, logOut } = useContext(AuthContext);
   const [users] = useUser();
   // all food
-  const [foodCarts, refetch] = useOrdered();
+  const [foodCarts] = useOrdered();
   const [orderedFood, setOrderedFood] = useState([]);
+  const [menu, refetch, isPending] = useMenu();
   // test
   const [userData, setUserData] = useState([]);
+
+  // this is to find the user
   useEffect(() => {
     const userInfo = users.find(
       (userEmail) => userEmail?.email === user?.email
     );
-    console.log("present user info", userInfo);
+    // console.log("present user info", userInfo);
     setUserData(userInfo);
   }, []);
   // this see his ordered food
@@ -27,11 +31,11 @@ const NavBar = () => {
     const userFood = foodCarts.filter(
       (oderEmail) => oderEmail?.email == user?.email
     );
-    console.log(userFood);
-    console.log("Cart length", userFood.length);
+    // console.log(userFood);
+    // console.log("Cart length", userFood.length);
+    refetch();
     setOrderedFood(userFood);
-  }, [foodCarts, user?.email]);
-  refetch();
+  }, [foodCarts, user?.email, refetch]);
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -70,14 +74,12 @@ const NavBar = () => {
           </li>
         </>
       )}
-      {user ? (
-        <>
-          <li>
-            <Link to="/makeARestaurant">Make a Restaurant</Link>
-          </li>
-        </>
-      ) : (
-        <></>
+      {/* {console.log("User Data:", userData)} */}
+      {/* {console.log("User Role:", userData?.role)} */}
+      {userData?.role !== "webAdmin" && user && (
+        <li>
+          <Link to="/makeARestaurant">Make a Restaurant</Link>
+        </li>
       )}
     </>
   );
@@ -88,24 +90,61 @@ const NavBar = () => {
 
   useEffect(() => {
     fetch("http://localhost:5000/fooditem")
-      // fetch("item.json")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);
-  // console.log(menuData);
   const handleSearch = (event) => {
     const searchFood = event.target.value;
-    // console.log(searchFood);
 
     if (searchFood) {
-      const filtered = menuData.filter((item) => item.category === searchFood);
+      const filtered = menuData.filter(
+        (item) => item?.category?.toUpperCase() === searchFood.toUpperCase()
+      );
       setFilteredItem(filtered);
+      console.log("info the search item ", filteredItem.length);
     } else {
       setFilteredItem([]);
     }
   };
 
-  //search end
+  // const [restName, setRestName] = useState([]);
+
+  // // useEffect to log the updated state
+  // useEffect(() => {
+  //   console.log(restName?._id);
+  // }, [restName]);
+
+  // const handleRestName = async (rName) => {
+  //   const restId = menu.find(
+  //     (findRestName) => findRestName.restaurantName == rName
+  //   );
+  //   isPending();
+  //   // setRestName and let the useEffect handle the logging
+  //   await setRestName(restId);
+  //   console.log(restId._id);
+  // };
+  const handleMouseEnter = async (restaurantName) => {
+    const restId = menuDataID.find(
+      (findRestName) => findRestName.restaurantName === restaurantName
+    );
+    await setRestName(restId);
+  };
+  // TODO : face the undefine of the restaurant._id
+  const [menuDataID, setMenuDataID] = useState([]);
+  const [restName, setRestName] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/menu")
+      .then((res) => res.json())
+      .then((data) => setMenuDataID(data));
+  }, []);
+  const handleRestName = async (rName) => {
+    const restId = menuDataID.find(
+      (findRestName) => findRestName.restaurantName == rName
+    );
+    // setRestName and let the useEffect handle the logging
+    await setRestName(restId);
+    console.log(restId._id);
+  };
 
   return (
     <>
@@ -149,8 +188,7 @@ const NavBar = () => {
           <input
             className="input input-bordered w-24 md:w-auto text-black"
             type="text"
-            // onBlur={handleSearch}
-            onChange={handleSearch}
+            onBlur={handleSearch}
             placeholder="Search by category"
           />
         </div>
@@ -165,14 +203,23 @@ const NavBar = () => {
               {filteredItem.length > 0 ? (
                 filteredItem.map((item) => (
                   <div key={item._id}>
-                    <p className="text-black text-amber-500 text-xl">
+                    <p className=" text-amber-500 text-xl">
                       {item.restaurantName}
                     </p>
                     <p>{item.name}</p>
 
                     <p className="text-black">Price: {item.price}$</p>
-                    <Link to={`/restaurantItem/${item._id}`}>
-                      <button className="bg-black">Go to Order</button>
+
+                    {/* take the rest name and this rest id  */}
+                    <Link
+                      to={restName ? `/restaurantItem/${restName._id}` : "#"}
+                      onMouseEnter={() => handleMouseEnter(item.restaurantName)}
+                      onMouseLeave={() => setRestName(null)} // Reset restName on mouse leave
+                      onClick={() => handleRestName(item.restaurantName)}
+                    >
+                      <div className="btn bg-black p-2 text-white">
+                        Go to Order
+                      </div>
                     </Link>
                   </div>
                 ))

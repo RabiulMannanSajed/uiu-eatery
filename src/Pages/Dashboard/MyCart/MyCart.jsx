@@ -5,7 +5,7 @@ import useOrdered from "../../../hooks/useOrdered";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
-
+//  for normal user
 const MyCart = () => {
   const { user } = useContext(AuthContext);
   const [users] = useUser();

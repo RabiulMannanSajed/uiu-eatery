@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../../../hooks/useCart";
+import useOrdered from "../../../hooks/useOrdered";
+import useUser from "../../../hooks/useUser";
 
 const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
   const { img, restaurantName, menuName } = dataOfRestaurantsInfo; // this is called destructinng
@@ -17,7 +18,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
   const [foods, setFoods] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [, refetch] = useCart();
+  const [, refetch] = useOrdered();
   // console.log(dataOfRestaurantsInfo);
   // console.log(menuName);
 
@@ -35,11 +36,6 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
       .then((data) => setFoods(data));
   }, []);
 
-  // if (!dataOfRestaurantsInfo) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // this is  new
   // this is for add the item in data base
   const handleAddToCart = (item) => {
     console.log(item);
@@ -98,6 +94,33 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
     }
   };
 
+  // if user is admin or webAdmin this time addToCart is unable
+  const [users] = useUser();
+  const [userData, setUserData] = useState([]);
+  // if user is admin he can not add item to cart
+  useEffect(() => {
+    const userinfo = users.find((userEmail) => userEmail?.email == user?.email);
+    setUserData(userinfo);
+  }, [user?.email, users]);
+
+  // this is quantity code
+  const [quantity, setQuantity] = useState({});
+
+  // ...
+
+  useEffect(() => {
+    if (menuName) {
+      setData(menuName);
+      setLoading(true);
+
+      // Initialize quantity state with default values
+      const initialQuantityState = {};
+      menuName.forEach((item) => {
+        initialQuantityState[item._id] = 1; // or you can set it to the existing quantity from the data
+      });
+      setQuantity(initialQuantityState);
+    }
+  }, [menuName]);
   return (
     <div>
       <Cover img={img} title={"Order Food"} restaurantName={restaurantName} />
@@ -115,15 +138,62 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
               <div className="card-body flex flex-col items-center">
                 <h2 className="card-title">{menuItem.name}</h2>
                 <p>{menuItem.recipe}</p>
-                <div className="card-actions justify-end">
+                {/* this is to make food as quentity  */}
+                <div className="flex items-center">
+                  <label htmlFor={`quantity_${menuItem._id}`} className="mr-5">
+                    Quantity
+                  </label>
                   <button
-                    // taking the item id new
-                    onClick={() => handleAddToCart(menuItem._id)}
+                    onClick={() => {
+                      if (quantity[menuItem._id] > 1) {
+                        setQuantity((prevQuantity) => ({
+                          ...prevQuantity,
+                          [menuItem._id]: prevQuantity[menuItem._id] - 1,
+                        }));
+                      }
+                    }}
                     className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
                   >
-                    Add to Cart
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    id={`quantity_${menuItem._id}`}
+                    name={`quantity_${menuItem._id}`}
+                    value={quantity[menuItem._id]}
+                    readOnly
+                    className="w-10 mx-2 text-center"
+                  />
+                  <button
+                    onClick={() => {
+                      setQuantity((prevQuantity) => ({
+                        ...prevQuantity,
+                        [menuItem._id]: prevQuantity[menuItem._id] + 1,
+                      }));
+                    }}
+                    className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
+                  >
+                    +
                   </button>
                 </div>
+
+                {/* if user is admin unable to add item  */}
+                {userData?.role === "admin" || userData?.role === "webAdmin" ? (
+                  <></>
+                ) : (
+                  <>
+                    {" "}
+                    <div className="card-actions justify-end">
+                      <button
+                        // taking the item id new
+                        onClick={() => handleAddToCart(menuItem._id)}
+                        className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           ))

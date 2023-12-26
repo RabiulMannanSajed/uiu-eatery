@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import useOrdered from "../../../hooks/useOrdered";
-import CheckoutForm from "./CheckoutForm";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useUser from "../../../hooks/useUser";
 import Swal from "sweetalert2";
@@ -35,55 +34,39 @@ const Payment = () => {
   //  TODO : update the foodCarts add this is payment done
   //  in this collection payment is not done then show them to the user
   const handlePay = (userData) => {
-    const updatedOrderedFood = orderedFood.map((item) => ({
-      ...item,
-      payment: "done",
-    }));
     fetch(
       `http://localhost:5000/foodCarts/paymentDone?email=${userData?.email}`,
       {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedOrderedFood),
+        method: "DELETE",
       }
     )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.modifiedCount) {
+        if (data.modifiedCount > 0) {
+          console.log(data.modifiedCount);
           Swal.fire(`Total ${total} Payment Done `);
         }
       });
-    console.log("paying email", userData.email);
   };
-
+  refetch();
   return (
-    <div>
-      <h2>I want to pay</h2>
+    <div className="ml-5">
+      <h2 className="p-20 text-center text-xl font-bold bg-orange-300">
+        I want to Pay
+      </h2>
       {/* we will show those un paid items  */}
-      {orderedFood.map((paid) => (
-        <div key={paid._id}>
-          {paid.payment === "done" ? (
-            <></>
-          ) : (
-            <>
-              {" "}
-              <div>
-                <p>Total Food you ordered : {orderedFood.length}</p>
-                <p>Price : {price}</p>
-              </div>
-              <button
-                onClick={() => handlePay(userData)}
-                disabled={orderedFood.length === 0}
-              >
-                pay
-              </button>{" "}
-            </>
-          )}
-        </div>
-      ))}
+      <div className="mt-5 text-xl font-semibold">
+        <p>Total Food you ordered : {orderedFood.length}</p>
+        <p>Price : {price}</p>
+      </div>
+      <button
+        className="btn btn-success mt-2"
+        onClick={() => handlePay(userData)}
+        disabled={orderedFood.length === 0}
+      >
+        pay
+      </button>{" "}
     </div>
   );
 };

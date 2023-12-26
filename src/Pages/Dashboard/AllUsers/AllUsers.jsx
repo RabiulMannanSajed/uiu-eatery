@@ -5,11 +5,7 @@ import Swal from "sweetalert2";
 
 const AllUsers = () => {
   const [menu] = useMenu();
-  const {
-    isPending,
-    data: users = [],
-    refetch,
-  } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/users");
@@ -102,7 +98,9 @@ const AllUsers = () => {
   };
   return (
     <div>
-      <h2>this is all users</h2>
+      <h2 className="text-xl p-20 bg-orange-200 text-center font-semibold">
+        This is all users
+      </h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}

@@ -131,7 +131,7 @@ const SignUp = () => {
             </form>
             <p className="p-4">
               <small>
-                All ready have an Account{" "}
+                Already have an Account{" "}
                 <Link className="text-blue-500" to="/login">
                   Login{" "}
                 </Link>{" "}

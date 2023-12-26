@@ -11,6 +11,9 @@ import AllUsers from "../Pages/Dashboard/Allusers/Allusers";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import MakeRestaurant from "../Pages/MakeRestaurant/MakeRestaurant";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import WebAdmin from "../Pages/Dashboard/WebAdmin/WebAdmin";
+import FewRestaurants from "../Pages/FewRestaurant/FewRestaurants/FewRestaurants";
+import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -26,10 +29,13 @@ export const router = createBrowserRouter([
         element: <Restaurants></Restaurants>,
       },
       {
+        path: "/fewRestaurant",
+        element: <FewRestaurants></FewRestaurants>,
+      },
+      {
         path: "/restaurantItem/:id", // dinmic route
         element: <RestaurantItem></RestaurantItem>,
         loader: () => fetch("http://localhost:5000/menu"),
-        // loader: () => fetch("/menu.json")
       },
       {
         path: "/login",
@@ -63,8 +69,16 @@ export const router = createBrowserRouter([
         element: <Payment></Payment>,
       },
       {
+        path: "userHome",
+        element: <UserHome></UserHome>,
+      },
+      {
         path: "adminHome",
         element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "webAdmin",
+        element: <WebAdmin></WebAdmin>,
       },
     ],
   },

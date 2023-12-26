@@ -51,26 +51,14 @@ const Dashboard = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-80 min-h-full text-base-content bg-[#facf41]">
-            {/* this is fro admin and normal user  */}
+          <ul className="menu p-4 w-80 min-h-full text-base-content bg-amber-200">
+            {/* this is fro admin and normal user, webAdmin  */}
             {isAdmin ? (
               <>
                 <li>
                   <NavLink to="/dashboard/adminHome">
                     {" "}
                     <FaHome></FaHome>Admin Home
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/addItems">
-                    {" "}
-                    <FaUtensils></FaUtensils>Add Item
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/manageItems">
-                    {" "}
-                    <FaList></FaList>Manage Item
                   </NavLink>
                 </li>
               </>
@@ -81,19 +69,17 @@ const Dashboard = () => {
                     <FaUsers></FaUsers>All Users
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/dashboard/webAdmin">Approve Restaurant</NavLink>
+                </li>
               </>
             ) : (
               <>
                 <li>
-                  <NavLink to="/dashboard/home">
+                  <NavLink to="/dashboard/userHome">
                     <FaShoppingCart></FaShoppingCart>User Home
                   </NavLink>
                 </li>{" "}
-                <li>
-                  <NavLink to="/dashboard/reservations">
-                    <FaShoppingCart></FaShoppingCart>Reservations
-                  </NavLink>
-                </li>
                 <li>
                   <NavLink to="/dashboard/myCart">
                     <FaShoppingCart></FaShoppingCart>My cart
@@ -102,11 +88,6 @@ const Dashboard = () => {
                 <li>
                   <NavLink to="/dashboard/payment">
                     <FaWallet></FaWallet> Payment History
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/myBooking">
-                    <FaCalendar></FaCalendar> my booking
                   </NavLink>
                 </li>
               </>
