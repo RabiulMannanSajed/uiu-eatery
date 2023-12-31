@@ -45,8 +45,6 @@ const RestaurantItems = () => {
 
   // delete an item from fooditem Collection
   const handleDeleteMenuItem = (itemId) => {
-    // TODO : can not delete the item form data base
-    const isItemIdString = String(itemId);
     console.log(itemId);
     Swal.fire({
       title: "Are you sure?",
