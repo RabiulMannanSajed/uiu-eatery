@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { useContext, useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
@@ -15,6 +15,9 @@ const NavBar = () => {
   const [foodCarts] = useOrdered();
   const [orderedFood, setOrderedFood] = useState([]);
   const [menu, refetch, isPending] = useMenu();
+
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   // test
   const [userData, setUserData] = useState([]);
 
@@ -165,21 +168,24 @@ const NavBar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navPotion}</ul>
         </div>
-
         {/* implement the new search field  */}
+        {isHomePage && (
+          <div>
+            <div>
+              <input
+                className="input input-bordered w-24 md:w-auto text-black"
+                type="text"
+                onBlur={handleSearch}
+                placeholder="Search by category"
+              />
+            </div>
+            {/* show search item model  */}
+            <label htmlFor="my_modal_6" className="btn btn-sm">
+              Search
+            </label>
+          </div>
+        )}
 
-        <div>
-          <input
-            className="input input-bordered w-24 md:w-auto text-black"
-            type="text"
-            onBlur={handleSearch}
-            placeholder="Search by category"
-          />
-        </div>
-        {/* show search item model  */}
-        <label htmlFor="my_modal_6" className="btn btn-sm">
-          Search
-        </label>
         <input type="checkbox" id="my_modal_6" className="modal-toggle" />
         <div className="modal" role="dialog">
           <div className="modal-box">
@@ -219,7 +225,6 @@ const NavBar = () => {
           </div>
         </div>
         {/* TODO : when user login then do it  */}
-
         <div className="navbar-end">
           <span>{user?.displayName}</span>
         </div>

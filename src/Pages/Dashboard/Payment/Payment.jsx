@@ -65,7 +65,7 @@ const Payment = () => {
         onClick={() => handlePay(userData)}
         disabled={orderedFood.length === 0}
       >
-        pay
+        pay Bkas
       </button>{" "}
     </div>
   );

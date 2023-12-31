@@ -19,8 +19,6 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [, refetch] = useOrdered();
-  // console.log(dataOfRestaurantsInfo);
-  // console.log(menuName);
 
   useEffect(() => {
     if (menuName) {
@@ -36,11 +34,27 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
       .then((data) => setFoods(data));
   }, []);
 
+  //  here find the rest name and rest name is the foodCart
+  //  if rest name match the food cart then show those item
+  const [matchFood, setMatchFood] = useState([]);
+  useEffect(() => {
+    const restName = foods.filter(
+      (matchName) => matchName.restaurantName == restaurantName
+    );
+    console.log("rest name match", restName);
+    setMatchFood(restName);
+  }, [foods, restaurantName]);
+
   // this is for add the item in data base
   const handleAddToCart = (item) => {
-    console.log(item);
+    console.log("Id of the food ", item);
     // this find the id
     const addFood = foods.find((food) => food._id == item);
+    const quantityValue = quantity[item];
+    const totalPrice = parseFloat(
+      (quantityValue * parseFloat(addFood?.price)).toFixed(2)
+    ); // Calculate and ensure two decimal places
+
     console.log(addFood);
     console.log(user);
     if (user && user.email) {
@@ -49,12 +63,13 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
         foodId: addFood._id,
         category: addFood.category,
         name: addFood.name,
-        price: addFood.price,
+        price: totalPrice,
         img: addFood.image,
         restaurantName: addFood.restaurantName,
         email: user.email,
+        quantity: quantityValue,
       };
-
+      console.log("Order Item ", orderItem);
       fetch("http://localhost:5000/foodCarts", {
         method: "POST",
         headers: {
@@ -67,7 +82,6 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
           if (data.insertedId) {
             // this is use for navbar
             refetch();
-
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -106,8 +120,6 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
   // this is quantity code
   const [quantity, setQuantity] = useState({});
 
-  // ...
-
   useEffect(() => {
     if (menuName) {
       setData(menuName);
@@ -127,7 +139,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
 
       <div className="grid grid-cols-3 gap-5 mt-5">
         {loading ? (
-          data.map((menuItem) => (
+          matchFood.map((menuItem) => (
             <div key={menuItem._id} className="card w-96 bg-base-100 shadow-xl">
               <figure>
                 <img src={menuItem.image} alt={menuItem.name} />
@@ -138,7 +150,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
               <div className="card-body flex flex-col items-center">
                 <h2 className="card-title">{menuItem.name}</h2>
                 <p>{menuItem.recipe}</p>
-                {/* this is to make food as quentity  */}
+                {/* this is to make food as Quantity*/}
                 <div className="flex items-center">
                   <label htmlFor={`quantity_${menuItem._id}`} className="mr-5">
                     Quantity
@@ -186,7 +198,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
                     <div className="card-actions justify-end">
                       <button
                         // taking the item id new
-                        onClick={() => handleAddToCart(menuItem._id)}
+                        onClick={() => handleAddToCart(menuItem?._id)}
                         className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
                       >
                         Add to Cart

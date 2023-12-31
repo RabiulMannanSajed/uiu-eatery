@@ -1,13 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/others/login.png";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
-
+  const [firebaseErrorMessage, setFirebaseErrorMessage] = useState(null);
   // to replace the user is the prev page
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,13 +20,18 @@ const Login = () => {
     const form = event.target; // take the value form input
     const email = form.email.value;
     const password = form.password.value;
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-      Swal.fire("Successfully Login");
-      // now take him to the right place
-      navigate(from, { replace: true });
-    });
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        Swal.fire("Successfully Login");
+        // now take him to the right place
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setFirebaseErrorMessage(errorMessage);
+      });
   };
 
   return (
@@ -57,6 +62,7 @@ const Login = () => {
                     className="input input-bordered"
                   />
                 </div>
+
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Password</span>
@@ -67,12 +73,9 @@ const Login = () => {
                     placeholder="password"
                     className="input input-bordered"
                   />
-                  <label className="label">
-                    <a href="#" className="label-text-alt link link-hover">
-                      Forgot password?
-                    </a>
-                  </label>
                 </div>
+                {/* this is error message  */}
+                <p className="text-red-500">{firebaseErrorMessage}</p>
                 <div className="form-control mt-6">
                   <input
                     className="btn btn-primary"

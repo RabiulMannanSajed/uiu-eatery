@@ -1,33 +1,34 @@
-import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const MakeRestaurant = () => {
-  const { register, control, handleSubmit, setValue, getValues, watch } =
-    useForm({
-      defaultValues: {
-        restaurantName: "",
-        menuItems: [
-          {
-            _id: "",
-            name: "",
-            recipe: "",
-            image: "",
-            category: "",
-            price: 0.0,
-          },
-        ],
-      },
-    });
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      restaurantName: "",
+      menuItems: [
+        {
+          _id: "",
+          name: "",
+          recipe: "",
+          image: "",
+          category: "",
+          price: 0.0,
+        },
+      ],
+    },
+  });
   const { fields, append, remove } = useFieldArray({
     control,
     name: "menuItems",
   });
 
+  const uniqueId = uuidv4();
+  const sliceId = uniqueId.slice(0, 8);
   const handleAddMenuItem = () => {
     append({
-      _id: uuidv4(),
+      _id: sliceId,
       name: "",
       recipe: "",
       category: "",
@@ -84,11 +85,12 @@ const MakeRestaurant = () => {
       body: JSON.stringify({
         restaurantName: data.restaurantName,
         img: restaurantImgUrl,
-        menuItems: menuItemsWithImages,
+        menuName: menuItemsWithImages,
       }),
     })
       .then((response) => response.json())
       .then((responseData) => {
+        Swal.fire("Added successfully");
         console.log("Response from server:", responseData);
       })
       .catch((error) => {
@@ -117,7 +119,7 @@ const MakeRestaurant = () => {
         <br />
         <div className="form-control w-full max-w-xs">
           <label className="label ">
-            <span className="label-text ">Item Image*</span>
+            <span className="label-text ">Restaurant Image</span>
           </label>
           <input
             {...register("image")}
@@ -204,7 +206,7 @@ const MakeRestaurant = () => {
               <br />
               <div className="form-control w-full max-w-xs">
                 <label className="label ">
-                  <span className="label-text ">Item Image*</span>
+                  <span className="label-text ">Item Image</span>
                 </label>
                 <input
                   {...register(`menuItems.${index}.image`)}

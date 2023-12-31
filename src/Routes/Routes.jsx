@@ -14,6 +14,8 @@ import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 import WebAdmin from "../Pages/Dashboard/WebAdmin/WebAdmin";
 import FewRestaurants from "../Pages/FewRestaurant/FewRestaurants/FewRestaurants";
 import UserHome from "../Pages/Dashboard/UserHome/UserHome";
+import RestaurantItems from "../Pages/Dashboard/RestaurantItems/RestaurantItems";
+import AddItem from "../Pages/Dashboard/AddItem/AddItem";
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ export const router = createBrowserRouter([
       {
         path: "webAdmin",
         element: <WebAdmin></WebAdmin>,
+      },
+      {
+        path: "restaurantItems",
+        element: <RestaurantItems></RestaurantItems>,
+      },
+      {
+        path: "addItem",
+        element: <AddItem></AddItem>,
       },
     ],
   },

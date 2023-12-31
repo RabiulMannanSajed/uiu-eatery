@@ -61,6 +61,15 @@ const Dashboard = () => {
                     <FaHome></FaHome>Admin Home
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/dashboard/restaurantItems">
+                    {" "}
+                    <FaHome></FaHome>Restaurant Items
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addItem">Add Item </NavLink>
+                </li>
               </>
             ) : isWebAdmin ? (
               <>
