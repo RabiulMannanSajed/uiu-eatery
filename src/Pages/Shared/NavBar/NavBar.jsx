@@ -79,7 +79,8 @@ const NavBar = () => {
       )}
       {/* {console.log("User Data:", userData)} */}
       {/* {console.log("User Role:", userData?.role)} */}
-      {userData?.role !== "webAdmin" && user && (
+      {/* If the user is web admin and already admin of any restaurant the no for them  */}
+      {userData?.role !== "webAdmin" && userData?.role !== "admin" && (
         <li>
           <Link to="/makeARestaurant">Make a Restaurant</Link>
         </li>

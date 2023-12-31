@@ -5,7 +5,7 @@ const useCart = () => {
   const { user } = useContext(AuthContext);
 
   // take the token form local Storage
-  const token = localStorage.getItem("access-token");
+  // const token = localStorage.getItem("access-token");
   //   the use of tanstackQ
 
   const {

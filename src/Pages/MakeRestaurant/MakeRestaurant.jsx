@@ -1,8 +1,26 @@
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
+import useUser from "../../hooks/useUser";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const MakeRestaurant = () => {
+  // take the user email and then make him admin of the restaurant
+  // web admin can see the info if he approve then user can add items
+
+  const { user } = useContext(AuthContext);
+  const [users] = useUser();
+  const [userInfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    const currentUserEmail = users.find(
+      (userEmail) => userEmail?.email == user?.email
+    );
+    console.log("user Email", currentUserEmail?.email);
+    setUserInfo(currentUserEmail);
+  }, [user?.email, users]);
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       restaurantName: "",
@@ -33,6 +51,7 @@ const MakeRestaurant = () => {
       body: JSON.stringify({
         restaurantName: data.restaurantName,
         img: restaurantImgUrl,
+        email: userInfo?.email,
       }),
     })
       .then((response) => response.json())
