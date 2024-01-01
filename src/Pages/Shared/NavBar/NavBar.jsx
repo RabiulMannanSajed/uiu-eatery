@@ -58,12 +58,19 @@ const NavBar = () => {
       <li>
         <Link to="/secret">Secret</Link>
       </li>
-      <li>
-        <Link to="/dashboard/myCart">
-          <FaShoppingCart className="text-orange-500 text-xl"></FaShoppingCart>{" "}
-          <div className="badge text-xl">+{orderedFood?.length || 0}</div>
-        </Link>
-      </li>
+      {user ? (
+        <>
+          <li>
+            <Link to="/dashboard/myCart">
+              <FaShoppingCart className="text-orange-500 text-xl"></FaShoppingCart>{" "}
+              <div className="badge text-xl">+{orderedFood?.length || 0}</div>
+            </Link>
+          </li>
+        </>
+      ) : (
+        <></>
+      )}
+
       {user ? (
         <>
           <button onClick={handleLogOut} className="btn btn-ghost">
@@ -77,9 +84,7 @@ const NavBar = () => {
           </li>
         </>
       )}
-      {/* {console.log("User Data:", userData)} */}
-      {/* {console.log("User Role:", userData?.role)} */}
-      {/* If the user is web admin and already admin of any restaurant the no for them  */}
+
       {userData?.role !== "webAdmin" && userData?.role !== "admin" && (
         <li>
           <Link to="/makeARestaurant">Make a Restaurant</Link>

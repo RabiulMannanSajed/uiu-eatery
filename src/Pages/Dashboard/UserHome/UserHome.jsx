@@ -18,8 +18,8 @@ const UserHome = () => {
     <div className="text-xl font-semibold ml-5">
       <h2 className="text-center p-20 bg-orange-300">User Home </h2>
       <div className="my-5">
-        <p>Name : {userInfo.name}</p>
-        <p>Email : {userInfo.email}</p>
+        <p>Name : {userInfo?.name}</p>
+        <p>Email : {userInfo?.email}</p>
       </div>
     </div>
   );
