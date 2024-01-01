@@ -55,9 +55,7 @@ const NavBar = () => {
       <li>
         <Link to="/menu">Our Restaurant </Link>
       </li>
-      <li>
-        <Link to="/secret">Secret</Link>
-      </li>
+
       {user ? (
         <>
           <li>
