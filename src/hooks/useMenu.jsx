@@ -8,7 +8,7 @@ const useMenu = () => {
   } = useQuery({
     queryKey: ["menu"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/menu");
+      const res = await fetch("https://uiueateryserver.onrender.com/menu");
       return res.json();
     },
   });

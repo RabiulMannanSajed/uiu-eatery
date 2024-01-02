@@ -8,7 +8,7 @@ const WebAdmin = () => {
   //   TODO : Change the URL
   //  hired info send data to backend
   const handleHire = (applicantId) => {
-    fetch(`http://localhost:5000/menu/approve/${applicantId}`, {
+    fetch(`https://uiueateryserver.onrender.com/menu/approve/${applicantId}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -23,7 +23,7 @@ const WebAdmin = () => {
     console.log(applicantId);
   };
   const handleReject = (applicantId) => {
-    fetch(`http://localhost:5000/menu/reject/${applicantId}`, {
+    fetch(`https://uiueateryserver.onrender.com/menu/reject/${applicantId}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -65,6 +65,9 @@ const WebAdmin = () => {
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{restaurant.restaurantName}</h2>
+                </div>
+                <div>
+                  <h2 className="card-title">Email : {restaurant?.email}</h2>
                 </div>
                 <div className="flex justify-between">
                   <div className="card-actions justify-end">

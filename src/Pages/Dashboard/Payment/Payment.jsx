@@ -3,7 +3,7 @@ import useOrdered from "../../../hooks/useOrdered";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useUser from "../../../hooks/useUser";
 import Swal from "sweetalert2";
-
+import bkash from "../../../assets/icon/Bkash-logo.png";
 const Payment = () => {
   const { user } = useContext(AuthContext);
   const [users] = useUser();
@@ -35,7 +35,7 @@ const Payment = () => {
   //  in this collection payment is not done then show them to the user
   const handlePay = (userData) => {
     fetch(
-      `http://localhost:5000/foodCarts/paymentDone?email=${userData?.email}`,
+      `https://uiueateryserver.onrender.com/foodCarts/paymentDone?email=${userData?.email}`,
       {
         method: "DELETE",
       }
@@ -61,11 +61,11 @@ const Payment = () => {
         <p>Price : {price}</p>
       </div>
       <button
-        className="btn btn-success mt-2"
+        className=" mt-2"
         onClick={() => handlePay(userData)}
         disabled={orderedFood.length === 0}
       >
-        pay Bkas
+        <img className="w-28" src={bkash} alt="" />
       </button>{" "}
     </div>
   );

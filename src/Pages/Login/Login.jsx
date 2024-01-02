@@ -24,6 +24,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        // this is form sweet alert
         Swal.fire("Successfully Login");
         // now take him to the right place
         navigate(from, { replace: true });
@@ -42,6 +43,9 @@ const Login = () => {
       {/*degiui  */}
 
       <div>
+        <p className="text-2xl text-center font-bold mt-5 text-orange-500">
+          UIU Eatery
+        </p>
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex md:flex">
             <div className="text-center lg:text-left">

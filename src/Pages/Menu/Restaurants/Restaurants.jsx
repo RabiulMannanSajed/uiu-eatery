@@ -6,7 +6,7 @@ const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/menu")
+    fetch("https://uiueateryserver.onrender.com/menu")
       .then((res) => res.json())
       .then((data) => setRestaurants(data));
   }, []);

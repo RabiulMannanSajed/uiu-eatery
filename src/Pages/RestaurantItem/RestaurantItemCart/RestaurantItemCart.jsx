@@ -29,7 +29,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
 
   // this is for food json call
   useEffect(() => {
-    fetch("http://localhost:5000/foodItem")
+    fetch("https://uiueateryserver.onrender.com/foodItem")
       .then((res) => res.json())
       .then((data) => setFoods(data));
   }, []);
@@ -70,7 +70,7 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
         quantity: quantityValue,
       };
       console.log("Order Item ", orderItem);
-      fetch("http://localhost:5000/foodCarts", {
+      fetch("https://uiueateryserver.onrender.com/foodCarts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,80 +138,76 @@ const RestaurantItemCart = ({ dataOfRestaurantsInfo }) => {
       <Cover img={img} title={"Order Food"} restaurantName={restaurantName} />
 
       <div className="grid grid-cols-3 gap-5 mt-5">
-        {loading ? (
-          matchFood.map((menuItem) => (
-            <div key={menuItem._id} className="card w-96 bg-base-100 shadow-xl">
-              <figure>
-                <img src={menuItem.image} alt={menuItem.name} />
-              </figure>
-              <p className="absolute right-0 mr-4 mt-4 px-4 bg-black text-white">
-                ${menuItem.price}
-              </p>
-              <div className="card-body flex flex-col items-center">
-                <h2 className="card-title">{menuItem.name}</h2>
-                <p>{menuItem.recipe}</p>
-                {/* this is to make food as Quantity*/}
-                <div className="flex items-center">
-                  <label htmlFor={`quantity_${menuItem._id}`} className="mr-5">
-                    Quantity
-                  </label>
-                  <button
-                    onClick={() => {
-                      if (quantity[menuItem._id] > 1) {
-                        setQuantity((prevQuantity) => ({
-                          ...prevQuantity,
-                          [menuItem._id]: prevQuantity[menuItem._id] - 1,
-                        }));
-                      }
-                    }}
-                    className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    id={`quantity_${menuItem._id}`}
-                    name={`quantity_${menuItem._id}`}
-                    value={quantity[menuItem._id]}
-                    readOnly
-                    className="w-10 mx-2 text-center"
-                  />
-                  <button
-                    onClick={() => {
+        {matchFood.map((menuItem) => (
+          <div key={menuItem._id} className="card w-96 bg-base-100 shadow-xl">
+            <figure>
+              <img src={menuItem.image} alt={menuItem.name} />
+            </figure>
+            <p className="absolute right-0 mr-4 mt-4 px-4 bg-black text-white">
+              ${menuItem.price}
+            </p>
+            <div className="card-body flex flex-col items-center">
+              <h2 className="card-title">{menuItem.name}</h2>
+              <p>{menuItem.recipe}</p>
+              {/* this is to make food as Quantity*/}
+              <div className="flex items-center">
+                <label htmlFor={`quantity_${menuItem._id}`} className="mr-5">
+                  Quantity
+                </label>
+                <button
+                  onClick={() => {
+                    if (quantity[menuItem._id] > 1) {
                       setQuantity((prevQuantity) => ({
                         ...prevQuantity,
-                        [menuItem._id]: prevQuantity[menuItem._id] + 1,
+                        [menuItem._id]: prevQuantity[menuItem._id] - 1,
                       }));
-                    }}
-                    className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
-                  >
-                    +
-                  </button>
-                </div>
-
-                {/* if user is admin unable to add item  */}
-                {userData?.role === "admin" || userData?.role === "webAdmin" ? (
-                  <></>
-                ) : (
-                  <>
-                    {" "}
-                    <div className="card-actions justify-end">
-                      <button
-                        // taking the item id new
-                        onClick={() => handleAddToCart(menuItem?._id)}
-                        className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </>
-                )}
+                    }
+                  }}
+                  className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  id={`quantity_${menuItem._id}`}
+                  name={`quantity_${menuItem._id}`}
+                  value={quantity[menuItem._id]}
+                  readOnly
+                  className="w-10 mx-2 text-center"
+                />
+                <button
+                  onClick={() => {
+                    setQuantity((prevQuantity) => ({
+                      ...prevQuantity,
+                      [menuItem._id]: prevQuantity[menuItem._id] + 1,
+                    }));
+                  }}
+                  className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
+                >
+                  +
+                </button>
               </div>
+
+              {/* if user is admin unable to add item  */}
+              {userData?.role === "admin" || userData?.role === "webAdmin" ? (
+                <></>
+              ) : (
+                <>
+                  {" "}
+                  <div className="card-actions justify-end">
+                    <button
+                      // taking the item id new
+                      onClick={() => handleAddToCart(menuItem?._id)}
+                      className="btn bg-slate-300 text-black border-0 border-b-4 mt-4 border-orange-500"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );

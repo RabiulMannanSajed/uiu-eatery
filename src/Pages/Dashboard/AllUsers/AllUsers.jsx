@@ -8,13 +8,13 @@ const AllUsers = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("https://uiueateryserver.onrender.com/users");
       return res.json();
     },
   });
   // this is to make the user admin
   const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+    fetch(`https://uiueateryserver.onrender.com/users/admin/${user._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -47,13 +47,16 @@ const AllUsers = () => {
     const updateData = {
       restaurantName: restaurantName,
     };
-    fetch(`http://localhost:5000/users/restaurantName/${user._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateData),
-    })
+    fetch(
+      `https://uiueateryserver.onrender.com/users/restaurantName/${user._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
@@ -77,7 +80,7 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/${user._id}`, {
+        fetch(`https://uiueateryserver.onrender.com/users/${user._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

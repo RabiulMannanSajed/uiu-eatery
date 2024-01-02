@@ -8,7 +8,7 @@ const useOrdered = () => {
   } = useQuery({
     queryKey: ["foodCarts"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/foodCarts");
+      const res = await fetch("https://uiueateryserver.onrender.com/foodCarts");
       return res.json();
     },
   });

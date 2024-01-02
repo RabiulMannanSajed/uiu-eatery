@@ -68,8 +68,14 @@ const NavBar = () => {
       ) : (
         <></>
       )}
+      {userData?.role !== "webAdmin" && userData?.role !== "admin" && user && (
+        // TODO :if user is not there remove it
+        <li>
+          <Link to="/makeARestaurant">Make a Restaurant</Link>
+        </li>
+      )}
 
-      {user ? (
+      {/* {user ? (
         <>
           <button onClick={handleLogOut} className="btn btn-ghost">
             LogOut
@@ -81,13 +87,7 @@ const NavBar = () => {
             <Link to="/login">Login</Link>
           </li>
         </>
-      )}
-
-      {userData?.role !== "webAdmin" && userData?.role !== "admin" && (
-        <li>
-          <Link to="/makeARestaurant">Make a Restaurant</Link>
-        </li>
-      )}
+      )} */}
     </>
   );
 
@@ -96,7 +96,7 @@ const NavBar = () => {
   const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/fooditem")
+    fetch("https://uiueateryserver.onrender.com/fooditem")
       .then((res) => res.json())
       .then((data) => setMenuData(data));
   }, []);
@@ -124,7 +124,7 @@ const NavBar = () => {
   const [menuDataID, setMenuDataID] = useState([]);
   const [restName, setRestName] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/menu")
+    fetch("https://uiueateryserver.onrender.com/menu")
       .then((res) => res.json())
       .then((data) => setMenuDataID(data));
   }, []);
@@ -200,7 +200,7 @@ const NavBar = () => {
                     <p className=" text-amber-500 text-xl">
                       {item.restaurantName}
                     </p>
-                    <p>{item.name}</p>
+                    <p className=" text-black">{item.name}</p>
 
                     <p className="text-black">Price: {item.price}$</p>
 
@@ -228,9 +228,24 @@ const NavBar = () => {
             </div>
           </div>
         </div>
+        {user ? (
+          <>
+            <button onClick={handleLogOut} className="btn btn-ghost">
+              LogOut
+            </button>
+          </>
+        ) : (
+          <>
+            <li className="navbar-end">
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
         {/* TODO : when user login then do it  */}
-        <div className="navbar-end">
-          <span>{user?.displayName}</span>
+        <div className="mr-2 ml-2 avatar placeholder">
+          <div className="bg-orange-400 text-neutral-content rounded-full w-12">
+            <span className="text-black">{user?.displayName}</span>{" "}
+          </div>
         </div>
       </div>
     </>

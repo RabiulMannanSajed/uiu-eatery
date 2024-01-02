@@ -17,7 +17,7 @@ const useCart = () => {
     queryKey: ["foodCarts", user?.email],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:5000/foodCarts?email=${user?.email}`,
+        `https://uiueateryserver.onrender.com/foodCarts?email=${user?.email}`,
         {} // this is use to show the price of an person
       );
       return response.json();

@@ -28,7 +28,7 @@ const SignUp = () => {
             email: data.email,
           };
           // this is taking the data of user and post the info to the database
-          fetch("http://localhost:5000/users", {
+          fetch("https://uiueateryserver.onrender.com/users", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -54,6 +54,9 @@ const SignUp = () => {
       <Helmet>
         <title>UIU Eatery | SignUp</title>
       </Helmet>
+      <p className="text-2xl text-center font-bold mt-5 text-orange-500">
+        UIU Eatery
+      </p>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">

@@ -52,7 +52,7 @@ const Dashboard = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu p-4 w-80 min-h-full text-base-content bg-amber-200">
-            {/* this is fro admin and normal user, webAdmin  */}
+            {/* this is fro admin */}
             {isAdmin ? (
               <>
                 <li>
@@ -71,7 +71,8 @@ const Dashboard = () => {
                   <NavLink to="/dashboard/addItem">Add Item </NavLink>
                 </li>
               </>
-            ) : isWebAdmin ? (
+            ) : // this is for webAdmin
+            isWebAdmin ? (
               <>
                 <li>
                   <NavLink to="/dashboard/allUsers">
@@ -83,6 +84,7 @@ const Dashboard = () => {
                 </li>
               </>
             ) : (
+              //  normal user
               <>
                 <li>
                   <NavLink to="/dashboard/userHome">

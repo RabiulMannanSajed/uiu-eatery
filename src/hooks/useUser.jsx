@@ -8,7 +8,7 @@ const useUser = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("https://uiueateryserver.onrender.com/users");
       return res.json();
     },
   });

@@ -38,10 +38,11 @@ const AddItem = () => {
       .then((imgResponse) => {
         if (imgResponse.success) {
           const imgUrl = imgResponse.data.display_url;
-          const { name, price, category, recipe } = data;
+          const { name, price, category, recipe, quantity } = data;
           const newItem = {
             name,
             price: parseFloat(price),
+            quantity: parseFloat(quantity),
             category,
             recipe,
             restaurantName: userInfo?.restaurantName,
@@ -49,7 +50,7 @@ const AddItem = () => {
           };
           console.log(newItem);
           //    send the data to the database
-          fetch("http://localhost:5000/foodItem", {
+          fetch("https://uiueateryserver.onrender.com/foodItem", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -133,6 +134,15 @@ const AddItem = () => {
           type="number"
           placeholder="Give the price of the item"
           {...register("price", { required: true })}
+          className="input input-bordered w-full "
+        />
+        <label className="label">
+          <span className="label-text font-bold text-xl">Quantity*</span>
+        </label>
+        <input
+          type="number"
+          placeholder="Give the Quantity of the item"
+          {...register("quantity", { required: true })}
           className="input input-bordered w-full "
         />
 

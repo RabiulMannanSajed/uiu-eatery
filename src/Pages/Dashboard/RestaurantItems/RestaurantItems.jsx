@@ -29,7 +29,7 @@ const RestaurantItems = () => {
 
   // //we find the rest name in WonRestName then base on that show the item and it's easy to delete the item database
   useEffect(() => {
-    fetch("http://localhost:5000/foodItem")
+    fetch("https://uiueateryserver.onrender.com/foodItem")
       .then((res) => res.json())
       .then((data) => setFoods(data));
   }, []);
@@ -56,7 +56,7 @@ const RestaurantItems = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/fooditem/${itemId}`, {
+        fetch(`https://uiueateryserver.onrender.com/fooditem/${itemId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

@@ -43,7 +43,7 @@ const MakeRestaurant = () => {
       : null;
 
     // send data to the data base
-    fetch("http://localhost:5000/menu", {
+    fetch("https://uiueateryserver.onrender.com/menu", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
